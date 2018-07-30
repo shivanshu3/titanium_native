@@ -1,0 +1,8 @@
+Dependencies: vcpkg at commit 2035d0124dd01ea3ebabfdcc99c7275f723cab13
+Packages:
+	- antlr4:x64-windows
+	- llvm:x64-windows (not currently used)
+
+Make sure you have Java installed (needed by antlr to generate the cpp/h parser files).
+
+Only x64 builds are supported. Both debug and release supported.
