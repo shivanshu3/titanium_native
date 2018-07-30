@@ -56,7 +56,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <CustomBuildStep>
-      <Command>java -jar $(ProjectDir)\..\tools\antlr-4.7.1-complete.jar -Dlanguage=Cpp $(ProjectDir)\calculator.g4 -o $(IntermediateOutputPath)\antlr_parser</Command>
+      <Command>java -jar $(ProjectDir)\..\tools\antlr-4.7.1-complete.jar -Dlanguage=Cpp $(ProjectDir)\calculator.g4 -visitor -o $(IntermediateOutputPath)\antlr_parser</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Outputs>
@@ -72,6 +72,10 @@
         $(IntermediateOutputPath)\antlr_parser\calculatorListener.h;
         $(IntermediateOutputPath)\antlr_parser\calculatorParser.cpp;
         $(IntermediateOutputPath)\antlr_parser\calculatorParser.h;
+        $(IntermediateOutputPath)\antlr_parser\calculatorBaseVisitor.h;
+        $(IntermediateOutputPath)\antlr_parser\calculatorBaseVisitor.cpp;
+        $(IntermediateOutputPath)\antlr_parser\calculatorVisitor.h;
+        $(IntermediateOutputPath)\antlr_parser\calculatorVisitor.cpp;
       </Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
@@ -111,8 +115,10 @@
   <!-- Antlr generated includes -->
   <ItemGroup>
     <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\calculatorBaseListener.h" />
-    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\calculatorLexer.h" />
     <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\calculatorListener.h" />
+    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\calculatorBaseVisitor.h" />
+    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\calculatorVisitor.h" />
+    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\calculatorLexer.h" />
     <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\calculatorParser.h" />
   </ItemGroup>
   <ItemGroup>
@@ -122,8 +128,10 @@
   <!-- Antlr generated sources -->
   <ItemGroup>
     <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\calculatorBaseListener.cpp" />
-    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\calculatorLexer.cpp" />
     <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\calculatorListener.cpp" />
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\calculatorBaseVisitor.cpp" />
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\calculatorVisitor.cpp" />
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\calculatorLexer.cpp" />
     <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\calculatorParser.cpp" />
   </ItemGroup>
   <ItemGroup>
