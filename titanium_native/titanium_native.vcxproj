@@ -20,6 +20,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+	<CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -57,8 +58,6 @@
   <ItemDefinitionGroup>
     <CustomBuildStep>
       <Command>java -jar $(ProjectDir)\..\tools\antlr-4.7.1-complete.jar -Dlanguage=Cpp $(ProjectDir)\calculator.g4 -visitor -o $(IntermediateOutputPath)\antlr_parser</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
       <Outputs>
         $(IntermediateOutputPath)\antlr_parser\calculator.interp;
         $(IntermediateOutputPath)\antlr_parser\calculator.tokens;
