@@ -32,6 +32,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 grammar calculator;
 
+/*
+ * Parser rules
+ */
+
 equation
    : expression relop expression
    ;
@@ -98,6 +102,9 @@ relop
    | LT
    ;
 
+/*
+ * Lexer rules
+ */
 
 COS
    : 'cos'

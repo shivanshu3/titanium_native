@@ -58,6 +58,9 @@
   <ItemDefinitionGroup>
     <CustomBuildStep>
       <Command>java -jar $(ProjectDir)\..\tools\antlr-4.7.1-complete.jar -Dlanguage=Cpp $(ProjectDir)\calculator.g4 -visitor -o $(IntermediateOutputPath)\antlr_parser</Command>
+      <Inputs>
+        $(ProjectDir)\calculator.g4;
+      </Inputs>
       <Outputs>
         $(IntermediateOutputPath)\antlr_parser\calculator.interp;
         $(IntermediateOutputPath)\antlr_parser\calculator.tokens;
