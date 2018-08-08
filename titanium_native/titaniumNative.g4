@@ -1,4 +1,4 @@
-grammar titaniumNative;
+grammar TitaniumNative;
 
 /*
  * Parser rules

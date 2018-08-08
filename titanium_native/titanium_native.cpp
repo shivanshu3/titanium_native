@@ -10,9 +10,9 @@
 
 using namespace antlr4;
 
-struct CustomVisitor : titaniumNativeBaseVisitor
+struct CustomVisitor : TitaniumNativeBaseVisitor
 {
-    virtual antlrcpp::Any visitTnExpression(titaniumNativeParser::TnExpressionContext *ctx) override
+    virtual antlrcpp::Any visitTnExpression(TitaniumNativeParser::TnExpressionContext *ctx) override
     {
         auto tnTermCtxs = ctx->tnTerm();
 
@@ -27,7 +27,7 @@ struct CustomVisitor : titaniumNativeBaseVisitor
         return terms;
     }
     
-    virtual antlrcpp::Any visitTnTerm(titaniumNativeParser::TnTermContext *ctx) override
+    virtual antlrcpp::Any visitTnTerm(TitaniumNativeParser::TnTermContext *ctx) override
     {
         return ctx->getText();
     }
@@ -37,11 +37,11 @@ int main(int argc, const char * argv[])
 {
 
     ANTLRInputStream input("30 11 123 554");
-    titaniumNativeLexer lexer(&input);
+    TitaniumNativeLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
-    titaniumNativeParser parser(&tokens);
+    TitaniumNativeParser parser(&tokens);
 
-    titaniumNativeParser::TnExpressionContext *tree = parser.tnExpression();
+    TitaniumNativeParser::TnExpressionContext *tree = parser.tnExpression();
 
     CustomVisitor visitor;
     std::vector<std::string> terms = visitor.visitTnExpression(tree);
