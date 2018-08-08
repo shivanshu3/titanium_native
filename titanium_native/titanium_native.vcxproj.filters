@@ -51,6 +51,9 @@
     <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeVisitor.h">
       <Filter>Header Files\AntlrGeneratedParserHeaders</Filter>
     </ClInclude>
+    <ClInclude Include="TitaniumAntlrVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
