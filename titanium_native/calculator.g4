@@ -4,25 +4,25 @@ grammar calculator;
  * Parser rules
  */
 
-texpression
-   : (tterm)+
+tnExpression
+   : (tnTerm)+
    ;
 
-tterm
-   : tliteral
-   | toperator
-   | tprocedure
+tnTerm
+   : tnLiteral
+   | tnOperator
+   | tnProcedure
    ;
 
-tprocedure
-   : '(' texpression ')'
+tnProcedure
+   : '(' tnExpression ')'
    ;
 
-tliteral
+tnLiteral
    : NUMBER
    ;
 
-toperator
+tnOperator
    : PLUS
    | MINUS
    | TIMES
