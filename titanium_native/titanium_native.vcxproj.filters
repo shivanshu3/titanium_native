@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\AntlrGeneratedParserHeaders">
+      <UniqueIdentifier>{bd8bdf8a-c87a-45e8-9826-cf6469413a32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AntlrGeneratedParserSources">
+      <UniqueIdentifier>{807e3c70-8e02-4abf-a598-a448a11592ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -21,29 +27,29 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeBaseListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeBaseVisitor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeVisitor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeLexer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AstElements.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeBaseListener.h">
+      <Filter>Header Files\AntlrGeneratedParserHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeBaseVisitor.h">
+      <Filter>Header Files\AntlrGeneratedParserHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeLexer.h">
+      <Filter>Header Files\AntlrGeneratedParserHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeListener.h">
+      <Filter>Header Files\AntlrGeneratedParserHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeParser.h">
+      <Filter>Header Files\AntlrGeneratedParserHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeVisitor.h">
+      <Filter>Header Files\AntlrGeneratedParserHeaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -54,22 +60,22 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeBaseListener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeListener.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\AntlrGeneratedParserSources</Filter>
     </ClCompile>
     <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeBaseVisitor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeVisitor.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\AntlrGeneratedParserSources</Filter>
     </ClCompile>
     <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeLexer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\AntlrGeneratedParserSources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeListener.cpp">
+      <Filter>Source Files\AntlrGeneratedParserSources</Filter>
     </ClCompile>
     <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeParser.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\AntlrGeneratedParserSources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeVisitor.cpp">
+      <Filter>Source Files\AntlrGeneratedParserSources</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
