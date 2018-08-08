@@ -5,7 +5,7 @@ grammar TitaniumNative;
  */
 
 tnExpression
-   : (tnTerm)+
+   : (tnTerm)+ EOF
    ;
 
 tnTerm
@@ -20,6 +20,7 @@ tnProcedure
 
 tnLiteral
    : TN_NUMBER
+   | TN_BOOL
    ;
 
 tnOperator
@@ -37,25 +38,31 @@ TN_PLUS
    : '+'
    ;
 
-
 TN_MINUS
    : '-'
    ;
 
-
 TN_TIMES
    : '*'
    ;
-
 
 TN_DIV
    : '/'
    ;
 
 TN_NUMBER
-   : ('0' .. '9') + ('.' ('0' .. '9') +)?
+   : ('0' .. '9')+ ('.' ('0' .. '9')+)?
+   ;
+
+TN_BOOL
+   : 'true'
+   | 'false'
    ;
 
 TN_WS
-   : [ \r\n\t] + -> skip
+   : [ \r\n\t]+ -> skip
+   ;
+
+TN_INVALID
+   : .+?
    ;
