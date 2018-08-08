@@ -129,6 +129,7 @@
     <ClInclude Include="AstElements.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TitaniumAntlrErrorListener.h" />
     <ClInclude Include="TitaniumAntlrVisitor.h" />
   </ItemGroup>
   <!-- Antlr generated sources -->

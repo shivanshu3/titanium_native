@@ -1,5 +1,7 @@
 #pragma once
 
+using namespace antlr4;
+
 // Note: The visitor functions return shared ptrs instead of unique ptrs because of this bug
 // in Antlr:
 // https://github.com/antlr/antlr4/issues/1855
