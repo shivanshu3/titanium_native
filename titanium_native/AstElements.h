@@ -38,14 +38,14 @@ private:
 
 struct TitaniumExpression
 {
-    TitaniumExpression(std::vector<std::shared_ptr<TitaniumTerm>> _terms) : m_terms{ _terms }
+    TitaniumExpression(std::vector<std::unique_ptr<TitaniumTerm>> _terms) : m_terms{ std::move(_terms) }
     {}
 
-    const std::vector<std::shared_ptr<TitaniumTerm>>& GetTerms() const
+    const std::vector<std::unique_ptr<TitaniumTerm>>& GetTerms() const
     {
         return m_terms;
     }
 
 private:
-    std::vector<std::shared_ptr<TitaniumTerm>> m_terms;
+    std::vector<std::unique_ptr<TitaniumTerm>> m_terms;
 };
