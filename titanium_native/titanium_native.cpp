@@ -50,6 +50,7 @@ struct CustomVisitor : TitaniumNativeBaseVisitor
         else
         {
             TnAssert(false);
+            return nullptr;
         }
     }
 
@@ -107,7 +108,7 @@ private:
 
 int main(int argc, const char * argv[])
 {
-    ANTLRInputStream input("11.2 123 + true compare =foo !foo ***");
+    ANTLRInputStream input("11.2 123 + true compare =foo !foo ...");
     TitaniumNativeLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     TitaniumNativeParser parser(&tokens);
@@ -126,9 +127,21 @@ int main(int argc, const char * argv[])
     CustomVisitor visitor;
     TitaniumExpression* expressionAst = visitor.visitTnExpression(tree);
 
-    std::wstring s = antlrcpp::s2ws(tree->toStringTree(&parser)) + L"\n";
+    // Printing the AST as parsed by us
+    {
+        std::wcout << L"Our custom parse tree:" << std::endl;
+        
+        for (const auto& term : expressionAst->GetTerms())
+        {
+            term->Print();
+        }
+    }
 
-    std::wcout << "Parse Tree: " << s << std::endl; // Unicode output in the console is very limited.
+    // Printing the AST as parsed by ANTLR
+    {
+        std::wstring s = antlrcpp::s2ws(tree->toStringTree(&parser)) + L"\n";
+        std::wcout << "ANTLR's parse tree:" << std::endl << s << std::endl;
+    }
 
     ExitApplication(0);
 }
