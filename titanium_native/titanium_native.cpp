@@ -33,9 +33,6 @@ struct CustomVisitor : TitaniumNativeBaseVisitor
     
     virtual antlrcpp::Any visitTnTerm(TitaniumNativeParser::TnTermContext *ctx) override
     {
-        // remove:
-        auto text = ctx->getText();
-
         auto literalCtx = ctx->tnLiteral();
 
         TnAssert(literalCtx);
@@ -52,14 +49,44 @@ struct CustomVisitor : TitaniumNativeBaseVisitor
     }
 };
 
+struct CustomErrorStrategy : DefaultErrorStrategy
+{
+    CustomErrorStrategy() : m_errorEncountered{false}
+    {}
+
+    bool errorEncountered()
+    {
+        return m_errorEncountered;
+    }
+
+protected:
+    virtual void beginErrorCondition(Parser *recognizer) override
+    {
+        std::cerr << "TN Error:" << std::endl;
+        m_errorEncountered = true;
+    }
+
+private:
+    bool m_errorEncountered;
+};
+
 int main(int argc, const char * argv[])
 {
-    ANTLRInputStream input("11.2 123 true blah 554.12");
+    ANTLRInputStream input("11.2 123 true 554.12");
     TitaniumNativeLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     TitaniumNativeParser parser(&tokens);
 
+    auto errorStrategy = std::make_shared<CustomErrorStrategy>();
+    parser.setErrorHandler(errorStrategy);
+
     TitaniumNativeParser::TnExpressionContext *tree = parser.tnExpression();
+
+    if (errorStrategy->errorEncountered())
+    {
+        std::cerr << "Exiting due to parse failure." << std::endl;
+        ExitApplication(1);
+    }
 
     CustomVisitor visitor;
     std::vector<std::string> terms = visitor.visitTnExpression(tree);
@@ -68,7 +95,5 @@ int main(int argc, const char * argv[])
 
     std::wcout << "Parse Tree: " << s << std::endl; // Unicode output in the console is very limited.
 
-    system("PAUSE");
-
-    return 0;
+    ExitApplication(0);
 }
