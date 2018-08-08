@@ -57,7 +57,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <CustomBuildStep>
-      <Command>java -jar $(ProjectDir)\..\tools\antlr-4.7.1-complete.jar -Dlanguage=Cpp $(ProjectDir)\calculator.g4 -visitor -o $(IntermediateOutputPath)\antlr_parser</Command>
+      <Command>java -jar $(ProjectDir)\..\tools\antlr-4.7.1-complete.jar -Werror -Dlanguage=Cpp $(ProjectDir)\calculator.g4 -visitor -o $(IntermediateOutputPath)\antlr_parser</Command>
       <Inputs>
         $(ProjectDir)\calculator.g4;
       </Inputs>

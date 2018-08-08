@@ -19,43 +19,43 @@ tnProcedure
    ;
 
 tnLiteral
-   : NUMBER
+   : TN_NUMBER
    ;
 
 tnOperator
-   : PLUS
-   | MINUS
-   | TIMES
-   | DIV
+   : TN_PLUS
+   | TN_MINUS
+   | TN_TIMES
+   | TN_DIV
    ;
 
 /*
  * Lexer rules
  */
 
-PLUS
+TN_PLUS
    : '+'
    ;
 
 
-MINUS
+TN_MINUS
    : '-'
    ;
 
 
-TIMES
+TN_TIMES
    : '*'
    ;
 
 
-DIV
+TN_DIV
    : '/'
    ;
 
-NUMBER
+TN_NUMBER
    : ('0' .. '9') + ('.' ('0' .. '9') +)?
    ;
 
-WS
+TN_WS
    : [ \r\n\t] + -> skip
    ;
