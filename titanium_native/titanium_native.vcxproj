@@ -131,17 +131,28 @@
   </ItemGroup>
   <!-- Antlr generated sources -->
   <ItemGroup>
-    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeBaseListener.cpp" />
-    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeListener.cpp" />
-    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeBaseVisitor.cpp" />
-    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeVisitor.cpp" />
-    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeLexer.cpp" />
-    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeParser.cpp" />
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeBaseListener.cpp">
+      <ForcedIncludeFiles>../../../stdafx.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeListener.cpp">
+      <ForcedIncludeFiles>../../../stdafx.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeBaseVisitor.cpp">
+      <ForcedIncludeFiles>../../../stdafx.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeVisitor.cpp">
+      <ForcedIncludeFiles>../../../stdafx.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeLexer.cpp">
+      <ForcedIncludeFiles>../../../stdafx.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeParser.cpp">
+      <ForcedIncludeFiles>../../../stdafx.h</ForcedIncludeFiles>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="titanium_native.cpp" />
   </ItemGroup>

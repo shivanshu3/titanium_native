@@ -1,9 +1,4 @@
-// Antlr includes
-#include "antlr4-runtime.h"
-#include "titaniumNativeLexer.h"
-#include "titaniumNativeParser.h"
-#include "titaniumNativeVisitor.h"
-#include "titaniumNativeBaseVisitor.h"
+#include "stdafx.h"
 
 // System includes
 #include <iostream>
