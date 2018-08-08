@@ -85,42 +85,58 @@ struct CustomVisitor : TitaniumNativeBaseVisitor
     }
 };
 
-struct CustomErrorStrategy : DefaultErrorStrategy
+struct CustomErrorListener : BaseErrorListener
 {
-    CustomErrorStrategy() : m_errorEncountered{ false }
-    {}
-
     bool errorEncountered() const
     {
         return m_errorEncountered;
     }
 
 protected:
-    virtual void beginErrorCondition(Parser *recognizer) override
+    virtual void syntaxError(Recognizer *recognizer, Token * offendingSymbol, size_t line, size_t charPositionInLine,
+        const std::string &msg, std::exception_ptr e) override
     {
-        std::cerr << "TN Error:" << std::endl;
+        m_errorEncountered = true;
+    }
+
+    virtual void reportAmbiguity(Parser *recognizer, const dfa::DFA &dfa, size_t startIndex, size_t stopIndex, bool exact,
+        const antlrcpp::BitSet &ambigAlts, atn::ATNConfigSet *configs) override
+    {
+        m_errorEncountered = true;
+    }
+
+    virtual void reportAttemptingFullContext(Parser *recognizer, const dfa::DFA &dfa, size_t startIndex, size_t stopIndex,
+        const antlrcpp::BitSet &conflictingAlts, atn::ATNConfigSet *configs) override
+    {
+        m_errorEncountered = true;
+    }
+
+    virtual void reportContextSensitivity(Parser *recognizer, const dfa::DFA &dfa, size_t startIndex, size_t stopIndex,
+        size_t prediction, atn::ATNConfigSet *configs) override
+    {
         m_errorEncountered = true;
     }
 
 private:
-    bool m_errorEncountered;
+    bool m_errorEncountered = false;
 };
 
 int main(int argc, const char * argv[])
 {
-    ANTLRInputStream input("11.2 123 + true compare =foo !foo ...");
+    ANTLRInputStream input("11.2 123 + true compare =foo !foo");
     TitaniumNativeLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     TitaniumNativeParser parser(&tokens);
 
-    auto errorStrategy = std::make_shared<CustomErrorStrategy>();
-    parser.setErrorHandler(errorStrategy);
+    CustomErrorListener errorListener;
+    lexer.addErrorListener(&errorListener);
+    parser.addErrorListener(&errorListener);
 
     TitaniumNativeParser::TnExpressionContext *tree = parser.tnExpression();
 
-    if (errorStrategy->errorEncountered())
+    if (errorListener.errorEncountered())
     {
-        std::cerr << "Exiting due to parse failure." << std::endl;
+        std::cerr << "Exiting due to lexer/parser failure." << std::endl;
         ExitApplication(1);
     }
 
