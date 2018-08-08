@@ -1,18 +1,18 @@
 #include <iostream>
 
 #include "antlr4-runtime.h"
-#include "calculatorLexer.h"
-#include "calculatorParser.h"
-#include "calculatorVisitor.h"
-#include "calculatorBaseVisitor.h"
+#include "titaniumNativeLexer.h"
+#include "titaniumNativeParser.h"
+#include "titaniumNativeVisitor.h"
+#include "titaniumNativeBaseVisitor.h"
 
 #include <Windows.h>
 
 using namespace antlr4;
 
-struct CustomVisitor : calculatorBaseVisitor
+struct CustomVisitor : titaniumNativeBaseVisitor
 {
-    virtual antlrcpp::Any visitTnExpression(calculatorParser::TnExpressionContext *ctx) override
+    virtual antlrcpp::Any visitTnExpression(titaniumNativeParser::TnExpressionContext *ctx) override
     {
         auto tnTermCtxs = ctx->tnTerm();
 
@@ -27,7 +27,7 @@ struct CustomVisitor : calculatorBaseVisitor
         return terms;
     }
     
-    virtual antlrcpp::Any visitTnTerm(calculatorParser::TnTermContext *ctx) override
+    virtual antlrcpp::Any visitTnTerm(titaniumNativeParser::TnTermContext *ctx) override
     {
         return ctx->getText();
     }
@@ -37,11 +37,11 @@ int main(int argc, const char * argv[])
 {
 
     ANTLRInputStream input("30 11 123 554");
-    calculatorLexer lexer(&input);
+    titaniumNativeLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
-    calculatorParser parser(&tokens);
+    titaniumNativeParser parser(&tokens);
 
-    calculatorParser::TnExpressionContext *tree = parser.tnExpression();
+    titaniumNativeParser::TnExpressionContext *tree = parser.tnExpression();
 
     CustomVisitor visitor;
     std::vector<std::string> terms = visitor.visitTnExpression(tree);

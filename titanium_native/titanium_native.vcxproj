@@ -57,27 +57,27 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <CustomBuildStep>
-      <Command>java -jar $(ProjectDir)\..\tools\antlr-4.7.1-complete.jar -Werror -Dlanguage=Cpp $(ProjectDir)\calculator.g4 -visitor -o $(IntermediateOutputPath)\antlr_parser</Command>
+      <Command>java -jar $(ProjectDir)\..\tools\antlr-4.7.1-complete.jar -Werror -Dlanguage=Cpp $(ProjectDir)\titaniumNative.g4 -visitor -o $(IntermediateOutputPath)\antlr_parser</Command>
       <Inputs>
-        $(ProjectDir)\calculator.g4;
+        $(ProjectDir)\titaniumNative.g4;
       </Inputs>
       <Outputs>
-        $(IntermediateOutputPath)\antlr_parser\calculator.interp;
-        $(IntermediateOutputPath)\antlr_parser\calculator.tokens;
-        $(IntermediateOutputPath)\antlr_parser\calculatorBaseListener.cpp;
-        $(IntermediateOutputPath)\antlr_parser\calculatorBaseListener.h;
-        $(IntermediateOutputPath)\antlr_parser\calculatorLexer.cpp;
-        $(IntermediateOutputPath)\antlr_parser\calculatorLexer.h;
-        $(IntermediateOutputPath)\antlr_parser\calculatorLexer.interp;
-        $(IntermediateOutputPath)\antlr_parser\calculatorLexer.tokens;
-        $(IntermediateOutputPath)\antlr_parser\calculatorListener.cpp;
-        $(IntermediateOutputPath)\antlr_parser\calculatorListener.h;
-        $(IntermediateOutputPath)\antlr_parser\calculatorParser.cpp;
-        $(IntermediateOutputPath)\antlr_parser\calculatorParser.h;
-        $(IntermediateOutputPath)\antlr_parser\calculatorBaseVisitor.h;
-        $(IntermediateOutputPath)\antlr_parser\calculatorBaseVisitor.cpp;
-        $(IntermediateOutputPath)\antlr_parser\calculatorVisitor.h;
-        $(IntermediateOutputPath)\antlr_parser\calculatorVisitor.cpp;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNative.interp;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNative.tokens;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNativeBaseListener.cpp;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNativeBaseListener.h;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNativeLexer.cpp;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNativeLexer.h;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNativeLexer.interp;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNativeLexer.tokens;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNativeListener.cpp;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNativeListener.h;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNativeParser.cpp;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNativeParser.h;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNativeBaseVisitor.h;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNativeBaseVisitor.cpp;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNativeVisitor.h;
+        $(IntermediateOutputPath)\antlr_parser\titaniumNativeVisitor.cpp;
       </Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
@@ -116,12 +116,12 @@
   </ItemDefinitionGroup>
   <!-- Antlr generated includes -->
   <ItemGroup>
-    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\calculatorBaseListener.h" />
-    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\calculatorListener.h" />
-    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\calculatorBaseVisitor.h" />
-    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\calculatorVisitor.h" />
-    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\calculatorLexer.h" />
-    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\calculatorParser.h" />
+    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\titaniumNativeBaseListener.h" />
+    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\titaniumNativeListener.h" />
+    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\titaniumNativeBaseVisitor.h" />
+    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\titaniumNativeVisitor.h" />
+    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\titaniumNativeLexer.h" />
+    <ClInclude Include="$(IntermediateOutputPath)\antlr_parser\titaniumNativeParser.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -129,12 +129,12 @@
   </ItemGroup>
   <!-- Antlr generated sources -->
   <ItemGroup>
-    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\calculatorBaseListener.cpp" />
-    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\calculatorListener.cpp" />
-    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\calculatorBaseVisitor.cpp" />
-    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\calculatorVisitor.cpp" />
-    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\calculatorLexer.cpp" />
-    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\calculatorParser.cpp" />
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\titaniumNativeBaseListener.cpp" />
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\titaniumNativeListener.cpp" />
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\titaniumNativeBaseVisitor.cpp" />
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\titaniumNativeVisitor.cpp" />
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\titaniumNativeLexer.cpp" />
+    <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\titaniumNativeParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

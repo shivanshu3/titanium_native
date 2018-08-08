@@ -1,4 +1,4 @@
-grammar calculator;
+grammar titaniumNative;
 
 /*
  * Parser rules
