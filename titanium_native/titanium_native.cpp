@@ -35,13 +35,27 @@ struct CustomVisitor : TitaniumNativeBaseVisitor
     // Returns TitaniumTerm*
     virtual antlrcpp::Any visitTnTerm(TitaniumNativeParser::TnTermContext *ctx) override
     {
-        auto literalCtx = ctx->tnLiteral();
+        if (ctx->tnLiteral())
+        {
+            TitaniumLiteral* resultLiteral = visit(ctx->tnLiteral());
+            TitaniumTerm* resultTerm = resultLiteral;
+            return resultTerm;
+        }
+        else if (ctx->tnOperator())
+        {
+            TitaniumOperator* resultOperator = visit(ctx->tnOperator());
+            TitaniumTerm* resultTerm = resultOperator;
+            return resultTerm;
+        }
+        else
+        {
+            TnAssert(false);
+        }
+    }
 
-        TnAssert(literalCtx);
-
-        TitaniumLiteral* resultLiteral = visit(literalCtx);
-        TitaniumTerm* resultTerm = resultLiteral;
-        return resultTerm;
+    // Returns TitaniumOperator*
+    virtual antlrcpp::Any visitTnOperator(TitaniumNativeParser::TnOperatorContext *ctx) override {
+        return new TitaniumOperator{ ctx->getText() };
     }
 
     // Returns TitaniumLiteral*
@@ -93,7 +107,7 @@ private:
 
 int main(int argc, const char * argv[])
 {
-    ANTLRInputStream input("11.2 123 true 554.12");
+    ANTLRInputStream input("11.2 123 + true compare =foo !foo ***");
     TitaniumNativeLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     TitaniumNativeParser parser(&tokens);

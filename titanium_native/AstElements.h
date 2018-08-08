@@ -36,6 +36,20 @@ private:
     bool m_value;
 };
 
+struct TitaniumOperator : TitaniumTerm
+{
+    TitaniumOperator(std::string text) : m_text{ std::move(text) }
+    {}
+
+    const std::string& GetText() const
+    {
+        return m_text;
+    }
+
+private:
+    std::string m_text;
+};
+
 struct TitaniumExpression
 {
     TitaniumExpression(std::vector<std::unique_ptr<TitaniumTerm>> _terms) : m_terms{ std::move(_terms) }
