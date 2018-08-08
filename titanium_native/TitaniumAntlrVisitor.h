@@ -20,7 +20,7 @@ struct TitaniumAntlrVisitor : TitaniumNativeBaseVisitor
             terms.push_back(std::unique_ptr<TitaniumTerm>{ term });
         }
 
-        return new TitaniumExpression { std::move(terms) };
+        return new TitaniumExpression{ std::move(terms) };
     }
 
     // Returns TitaniumTerm*
@@ -48,7 +48,84 @@ struct TitaniumAntlrVisitor : TitaniumNativeBaseVisitor
     // Returns TitaniumOperator*
     virtual antlrcpp::Any visitTnOperator(TitaniumNativeParser::TnOperatorContext *ctx) override
     {
-        return new TitaniumOperator { ctx->getText() };
+        TitaniumOperator* _operator = nullptr;
+
+        if (ctx->tnWordOperator())
+        {
+            TitaniumWordOperator* wordOperator = visit(ctx->tnWordOperator());
+            _operator = wordOperator;
+        }
+        else if (ctx->tnVariableOperator())
+        {
+            TitaniumVariableOperator* variableOperator = visit(ctx->tnVariableOperator());
+            _operator = variableOperator;
+        }
+        else if (ctx->tnSymbolOperator())
+        {
+            TitaniumSymbolOperator* symbolOperator = visit(ctx->tnSymbolOperator());
+            _operator = symbolOperator;
+        }
+        else
+        {
+            TnAssert(false);
+        }
+
+        return _operator;
+    }
+
+    // Returns TitaniumWordOperator*
+    virtual antlrcpp::Any visitTnWordOperator(TitaniumNativeParser::TnWordOperatorContext *ctx) override
+    {
+        return new TitaniumWordOperator{ ctx->getText() };
+    }
+
+    // Returns TitaniumVariableOperator*
+    virtual antlrcpp::Any visitTnVariableOperator(TitaniumNativeParser::TnVariableOperatorContext *ctx) override
+    {
+        auto text = ctx->getText();
+
+        bool assignment = text[0] == '=';
+
+        if (!assignment)
+        {
+            TnAssert(text[0] == '!');
+        }
+
+        // "text" will store the identifier name after this statement
+        text.erase(text.begin());
+
+        return new TitaniumVariableOperator{ std::move(text), assignment };
+    }
+
+    // Returns TitaniumSymbolOperator*
+    virtual antlrcpp::Any visitTnSymbolOperator(TitaniumNativeParser::TnSymbolOperatorContext *ctx) override
+    {
+        auto text = ctx->getText();
+
+        TitaniumSymbolType symbol;
+
+        if (text == "+")
+        {
+            symbol = TitaniumSymbolType::PLUS;
+        }
+        else if (text == "-")
+        {
+            symbol = TitaniumSymbolType::MINUS;
+        }
+        else if (text == "*")
+        {
+            symbol = TitaniumSymbolType::TIMES;
+        }
+        else if (text == "/")
+        {
+            symbol = TitaniumSymbolType::DIV;
+        }
+        else
+        {
+            TnAssert(false);
+        }
+
+        return new TitaniumSymbolOperator{ symbol };
     }
 
     // Returns TitaniumLiteral*
@@ -61,12 +138,12 @@ struct TitaniumAntlrVisitor : TitaniumNativeBaseVisitor
         if (ctx->TN_NUMBER())
         {
             double value = std::atof(text.data());
-            result = new TitaniumNumberLiteral { value };
+            result = new TitaniumNumberLiteral{ value };
         }
         else if (ctx->TN_BOOL())
         {
             bool value = (text == "true") ? true : false;
-            result = new TitaniumBoolLiteral { value };
+            result = new TitaniumBoolLiteral{ value };
         }
         else
         {

@@ -49,21 +49,102 @@ private:
 
 struct TitaniumOperator : TitaniumTerm
 {
-    TitaniumOperator(std::string text) : m_text{ std::move(text) }
+};
+
+struct TitaniumWordOperator : TitaniumOperator
+{
+    TitaniumWordOperator(std::string identifier) : m_identifier{ std::move(identifier) }
     {}
 
-    const std::string& GetText() const
+    const std::string& GetName() const
     {
-        return m_text;
+        return m_identifier;
     }
 
     virtual void Print() override
     {
-        std::cout << m_text << std::endl;
+        std::cout << m_identifier << std::endl;
     }
 
 private:
-    std::string m_text;
+    std::string m_identifier;
+};
+
+struct TitaniumVariableOperator : TitaniumOperator
+{
+    TitaniumVariableOperator(std::string variableName, bool assignment) :
+        m_variableName{ std::move(variableName) },
+        m_assignment{ assignment }
+    {}
+
+    const std::string& GetVariableName() const
+    {
+        return m_variableName;
+    }
+
+    bool IsAssignment() const
+    {
+        return m_assignment;
+    }
+
+    virtual void Print() override
+    {
+        char firstChar = m_assignment ? '=' : '!';
+        std::cout << "var_op:{" << firstChar << m_variableName << '}' << std::endl;
+    }
+
+private:
+    std::string m_variableName;
+    bool m_assignment;
+};
+
+enum class TitaniumSymbolType
+{
+    INVALID,
+    PLUS,
+    MINUS,
+    TIMES,
+    DIV
+};
+
+struct TitaniumSymbolOperator : TitaniumOperator
+{
+    TitaniumSymbolOperator(TitaniumSymbolType symbol) : m_symbol{ symbol }
+    {}
+
+    TitaniumSymbolType GetSymbol() const
+    {
+        return m_symbol;
+    }
+
+    virtual void Print() override
+    {
+        std::string result;
+
+        switch (m_symbol)
+        {
+            case TitaniumSymbolType::PLUS:
+                result = "+";
+                break;
+            case TitaniumSymbolType::MINUS:
+                result = "-";
+                break;
+            case TitaniumSymbolType::TIMES:
+                result = "*";
+                break;
+            case TitaniumSymbolType::DIV:
+                result = "/";
+                break;
+            default:
+                result = "INVALID_SYMBOL";
+                break;
+        }
+
+        std::cout << result << std::endl;
+    }
+
+private:
+    TitaniumSymbolType m_symbol;
 };
 
 // This is the top level AST node, which represents the entire Titanium program

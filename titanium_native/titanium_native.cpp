@@ -47,8 +47,8 @@ int main(int argc, const char * argv[])
 
     // Printing the AST as parsed by ANTLR
     {
-        std::wstring s = antlrcpp::s2ws(tree->toStringTree(&parser)) + L"\n";
-        std::wcout << "ANTLR's parse tree:" << std::endl << s << std::endl;
+        // std::wstring s = antlrcpp::s2ws(tree->toStringTree(&parser)) + L"\n";
+        // std::wcout << "ANTLR's parse tree:" << std::endl << s << std::endl;
     }
 
     ExitApplication(0);
