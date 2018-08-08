@@ -8,53 +8,80 @@
 // System includes
 #include <iostream>
 #include <Windows.h>
+#include <cstdlib>
 
 // Project includes
 #include "../util.h"
+#include "AstElements.h"
 
 using namespace antlr4;
 
+// Note: The visitor functions return shared ptrs instead of unique ptrs because of this bug
+// in Antlr:
+// https://github.com/antlr/antlr4/issues/1855
 struct CustomVisitor : TitaniumNativeBaseVisitor
 {
+    // Returns std::shared_ptr<TitaniumExpression>
     virtual antlrcpp::Any visitTnExpression(TitaniumNativeParser::TnExpressionContext *ctx) override
     {
         auto tnTermCtxs = ctx->tnTerm();
 
-        std::vector<std::string> terms;
+        std::vector<std::shared_ptr<TitaniumTerm>> terms;
 
         for (auto& ttermCtx : tnTermCtxs)
         {
-            std::string term = visit(ttermCtx);
+            std::shared_ptr<TitaniumTerm> term = visit(ttermCtx);
             terms.push_back(std::move(term));
         }
 
-        return terms;
+        return std::make_shared<TitaniumExpression>(std::move(terms));
     }
-    
+
+    // Returns std::shared_ptr<TitaniumTerm>
     virtual antlrcpp::Any visitTnTerm(TitaniumNativeParser::TnTermContext *ctx) override
     {
         auto literalCtx = ctx->tnLiteral();
 
         TnAssert(literalCtx);
 
-        return visit(literalCtx);
+        std::shared_ptr<TitaniumLiteral> resultLiteral = visit(literalCtx);
+        std::shared_ptr<TitaniumTerm> resultTerm = resultLiteral;
+
+        return resultTerm;
     }
 
+    // Returns std::shared_ptr<TitaniumLiteral>
     virtual antlrcpp::Any visitTnLiteral(TitaniumNativeParser::TnLiteralContext *ctx) override
     {
-        auto foo = ctx->TN_NUMBER();
-        auto bar = ctx->TN_BOOL();
+        std::shared_ptr<TitaniumLiteral> result;
 
-        return ctx->getText();
+        auto text = ctx->getText();
+
+        if (ctx->TN_NUMBER())
+        {
+            double value = std::atof(text.data());
+            result = std::make_shared<TitaniumNumberLiteral>(value);
+        }
+        else if (ctx->TN_BOOL())
+        {
+            bool value = (text == "true") ? true : false;
+            result = std::make_shared<TitaniumBoolLiteral>(value);
+        }
+        else
+        {
+            TnAssert(false);
+        }
+
+        return result;
     }
 };
 
 struct CustomErrorStrategy : DefaultErrorStrategy
 {
-    CustomErrorStrategy() : m_errorEncountered{false}
+    CustomErrorStrategy() : m_errorEncountered{ false }
     {}
 
-    bool errorEncountered()
+    bool errorEncountered() const
     {
         return m_errorEncountered;
     }
@@ -89,7 +116,7 @@ int main(int argc, const char * argv[])
     }
 
     CustomVisitor visitor;
-    std::vector<std::string> terms = visitor.visitTnExpression(tree);
+    std::shared_ptr<TitaniumExpression> expressionAst = visitor.visitTnExpression(tree);
 
     std::wstring s = antlrcpp::s2ws(tree->toStringTree(&parser)) + L"\n";
 

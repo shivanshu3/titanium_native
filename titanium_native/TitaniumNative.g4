@@ -62,7 +62,3 @@ TN_BOOL
 TN_WS
    : [ \r\n\t]+ -> skip
    ;
-
-TN_INVALID
-   : .+?
-   ;
