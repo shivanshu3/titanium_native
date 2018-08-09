@@ -13,9 +13,12 @@
 
 using namespace antlr4;
 
-int main(int argc, const char * argv[])
+// Parses the given program and returns the AST.
+// If the parse is not successful because of a lexer/parser error, then an
+// exception is thrown of type std::string with the error message.
+std::unique_ptr<TitaniumExpression> ParseProgram(const std::string& programInput)
 {
-    ANTLRInputStream input("11.2 123 + true compare =foo !foo (2 3 +) `hello`");
+    ANTLRInputStream input(programInput);
     TitaniumNativeLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     TitaniumNativeParser parser(&tokens);
@@ -28,30 +31,31 @@ int main(int argc, const char * argv[])
 
     if (errorListener.errorEncountered())
     {
-        std::cerr << "Exiting due to lexer/parser failure." << std::endl;
-        ExitApplication(1);
+        throw std::string{ "Exiting due to lexer/parser failure." };
     }
 
     TitaniumAntlrVisitor visitor;
     TitaniumExpression* expressionAst = visitor.visitTnProgram(tree);
 
-    // Printing the AST as parsed by us
-    {
-        std::wcout << L"Our custom parse tree:" << std::endl;
-        
-        for (const auto& term : expressionAst->GetTerms())
-        {
-            term->Print();
-        }
+    return std::unique_ptr<TitaniumExpression>{expressionAst};
+}
 
-        std::wcout << std::endl;
+int main(int argc, const char * argv[])
+{
+    std::unique_ptr<TitaniumExpression> titaniumExpression;
+    
+    try
+    {
+        titaniumExpression = ParseProgram("11.2 123 + true compare =foo !foo (2 3 +) `hello`");
+    }
+    catch (const std::string& err)
+    {
+        std::cerr << err << std::endl;
+        ExitApplication(1);
     }
 
-    // Printing the AST as parsed by ANTLR
-    {
-        std::wstring s = antlrcpp::s2ws(tree->toStringTree(&parser)) + L"\n";
-        std::wcout << "ANTLR's parse tree:" << std::endl << s << std::endl;
-    }
+    std::wcout << L"The Titanium AST:" << std::endl;
+    titaniumExpression->Print();
 
     ExitApplication(0);
 }
