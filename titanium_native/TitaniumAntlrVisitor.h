@@ -8,6 +8,12 @@ using namespace antlr4;
 struct TitaniumAntlrVisitor : TitaniumNativeBaseVisitor
 {
     // Returns TitaniumExpression*
+    virtual antlrcpp::Any visitTnProgram(TitaniumNativeParser::TnProgramContext *ctx) override
+    {
+        return visit(ctx->tnExpression());
+    }
+
+    // Returns TitaniumExpression*
     virtual antlrcpp::Any visitTnExpression(TitaniumNativeParser::TnExpressionContext *ctx) override
     {
         auto tnTermCtxs = ctx->tnTerm();
@@ -26,23 +32,38 @@ struct TitaniumAntlrVisitor : TitaniumNativeBaseVisitor
     // Returns TitaniumTerm*
     virtual antlrcpp::Any visitTnTerm(TitaniumNativeParser::TnTermContext *ctx) override
     {
+        TitaniumTerm* resultTerm = nullptr;
+
         if (ctx->tnLiteral())
         {
             TitaniumLiteral* resultLiteral = visit(ctx->tnLiteral());
-            TitaniumTerm* resultTerm = resultLiteral;
-            return resultTerm;
+            resultTerm = resultLiteral;
         }
         else if (ctx->tnOperator())
         {
             TitaniumOperator* resultOperator = visit(ctx->tnOperator());
-            TitaniumTerm* resultTerm = resultOperator;
-            return resultTerm;
+            resultTerm = resultOperator;
+        }
+        else if (ctx->tnProcedure())
+        {
+            TitaniumProcedure* resultProcedure = visit(ctx->tnProcedure());
+            resultTerm = resultProcedure;
         }
         else
         {
             TnAssert(false);
-            return nullptr;
         }
+
+        return resultTerm;
+    }
+
+    // Returns TitaniumProcedure*
+    virtual antlrcpp::Any visitTnProcedure(TitaniumNativeParser::TnProcedureContext *ctx) override
+    {
+        TitaniumExpression* expression = visit(ctx->tnExpression());
+        std::unique_ptr<TitaniumExpression> expressionPtr { expression };
+
+        return new TitaniumProcedure { std::move(expressionPtr) };
     }
 
     // Returns TitaniumOperator*

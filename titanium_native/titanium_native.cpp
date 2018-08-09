@@ -15,7 +15,7 @@ using namespace antlr4;
 
 int main(int argc, const char * argv[])
 {
-    ANTLRInputStream input("11.2 123 + true compare =foo !foo");
+    ANTLRInputStream input("11.2 123 + true compare =foo !foo (2 3 +)");
     TitaniumNativeLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     TitaniumNativeParser parser(&tokens);
@@ -24,7 +24,7 @@ int main(int argc, const char * argv[])
     lexer.addErrorListener(&errorListener);
     parser.addErrorListener(&errorListener);
 
-    TitaniumNativeParser::TnExpressionContext *tree = parser.tnExpression();
+    TitaniumNativeParser::TnProgramContext *tree = parser.tnProgram();
 
     if (errorListener.errorEncountered())
     {
@@ -33,7 +33,7 @@ int main(int argc, const char * argv[])
     }
 
     TitaniumAntlrVisitor visitor;
-    TitaniumExpression* expressionAst = visitor.visitTnExpression(tree);
+    TitaniumExpression* expressionAst = visitor.visitTnProgram(tree);
 
     // Printing the AST as parsed by us
     {
@@ -43,12 +43,14 @@ int main(int argc, const char * argv[])
         {
             term->Print();
         }
+
+        std::wcout << std::endl;
     }
 
     // Printing the AST as parsed by ANTLR
     {
-        // std::wstring s = antlrcpp::s2ws(tree->toStringTree(&parser)) + L"\n";
-        // std::wcout << "ANTLR's parse tree:" << std::endl << s << std::endl;
+        std::wstring s = antlrcpp::s2ws(tree->toStringTree(&parser)) + L"\n";
+        std::wcout << "ANTLR's parse tree:" << std::endl << s << std::endl;
     }
 
     ExitApplication(0);

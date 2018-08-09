@@ -1,8 +1,12 @@
 #pragma once
 
-struct TitaniumTerm
+struct TitaniumAstNode
 {
     virtual void Print() = 0;
+};
+
+struct TitaniumTerm : TitaniumAstNode
+{
 };
 
 struct TitaniumLiteral : TitaniumTerm
@@ -148,7 +152,7 @@ private:
 };
 
 // This is the top level AST node, which represents the entire Titanium program
-struct TitaniumExpression
+struct TitaniumExpression : TitaniumAstNode
 {
     TitaniumExpression(std::vector<std::unique_ptr<TitaniumTerm>> _terms) : m_terms{ std::move(_terms) }
     {}
@@ -158,6 +162,40 @@ struct TitaniumExpression
         return m_terms;
     }
 
+    virtual void Print() override
+    {
+        std::wcout << "Expression start" << std::endl;
+
+        for (auto const& term : m_terms)
+        {
+            term->Print();
+        }
+
+        std::wcout << "Expression stop" << std::endl;
+    }
+
 private:
     std::vector<std::unique_ptr<TitaniumTerm>> m_terms;
+};
+
+struct TitaniumProcedure : TitaniumTerm
+{
+    TitaniumProcedure(std::unique_ptr<TitaniumExpression> expression) : m_expression { std::move(expression) }
+    {
+    }
+
+    const TitaniumExpression& GetExpression() const
+    {
+        return *m_expression;
+    }
+
+    virtual void Print() override
+    {
+        std::wcout << "Procedure start" << std::endl;
+        m_expression->Print();
+        std::wcout << "Procedure end" << std::endl;
+    }
+
+private:
+    std::unique_ptr<TitaniumExpression> m_expression;
 };

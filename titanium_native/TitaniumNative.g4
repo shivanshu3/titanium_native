@@ -4,8 +4,13 @@ grammar TitaniumNative;
  * Parser rules
  */
 
+// This is the root node
+tnProgram
+   : tnExpression EOF
+   ;
+
 tnExpression
-   : (tnTerm)+ EOF
+   : (tnTerm)+
    ;
 
 tnTerm
