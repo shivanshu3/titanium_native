@@ -166,11 +166,44 @@ struct TitaniumAntlrVisitor : TitaniumNativeBaseVisitor
             bool value = (text == "true") ? true : false;
             result = new TitaniumBoolLiteral{ value };
         }
+        else if (ctx->tnString())
+        {
+            TitaniumStringLiteral* stringLiteral = visit(ctx->tnString());
+            result = stringLiteral;
+        }
         else
         {
             TnAssert(false);
         }
 
         return result;
+    }
+
+    // Returns TitaniumStringLiteral*
+    virtual antlrcpp::Any visitTnString(TitaniumNativeParser::TnStringContext *ctx) override
+    {
+        auto text = ctx->getText();
+
+        size_t numCharsToDeleteFromFront = -1;
+
+        if (ctx->TN_NON_VERBATIM_STRING())
+        {
+            numCharsToDeleteFromFront = 1;
+
+            // TODO: Handle escape sequence
+        }
+        else if (ctx->TN_VERBATIM_STRING())
+        {
+            numCharsToDeleteFromFront = 2;
+        }
+        else
+        {
+            TnAssert(false);
+        }
+
+        text.erase(0, numCharsToDeleteFromFront);
+        text.erase(text.end() - 1);
+
+        return new TitaniumStringLiteral { std::move(text) };
     }
 };

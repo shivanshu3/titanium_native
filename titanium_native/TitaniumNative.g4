@@ -26,6 +26,12 @@ tnProcedure
 tnLiteral
    : TN_NUMBER
    | TN_BOOL
+   | tnString
+   ;
+
+tnString
+   : TN_NON_VERBATIM_STRING
+   | TN_VERBATIM_STRING
    ;
 
 tnOperator
@@ -90,6 +96,27 @@ TN_NUMBER
 TN_BOOL
    : 'true'
    | 'false'
+   ;
+
+TN_NON_VERBATIM_STRING
+   : '`' TN_NON_VERBATIM_CHAR* '`'
+   ;
+
+TN_VERBATIM_STRING
+   : '@' '`' TN_VERBATIM_CHAR* '`'
+   ;
+
+fragment TN_NON_VERBATIM_CHAR
+   : ~["\\\r\n]
+   | TN_ESCAPE_SEQUENCE
+   ;
+
+fragment TN_VERBATIM_CHAR
+   : ~[\u0000-\u001F\u0060]
+   ;
+
+fragment TN_ESCAPE_SEQUENCE
+   : '\\' [btnfr"'\\]
    ;
 
 TN_WS

@@ -15,7 +15,7 @@ using namespace antlr4;
 
 int main(int argc, const char * argv[])
 {
-    ANTLRInputStream input("11.2 123 + true compare =foo !foo (2 3 +)");
+    ANTLRInputStream input("11.2 123 + true compare =foo !foo (2 3 +) `hello`");
     TitaniumNativeLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     TitaniumNativeParser parser(&tokens);

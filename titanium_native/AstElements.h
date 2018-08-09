@@ -51,6 +51,25 @@ private:
     bool m_value;
 };
 
+struct TitaniumStringLiteral : TitaniumLiteral
+{
+    TitaniumStringLiteral(std::string value) : m_value { std::move(value) }
+    {}
+
+    const std::string& GetValue() const
+    {
+        return m_value;
+    }
+
+    virtual void Print() override
+    {
+        std::cout << m_value << std::endl;
+    }
+
+private:
+    std::string m_value;
+};
+
 struct TitaniumOperator : TitaniumTerm
 {
 };
