@@ -50,10 +50,18 @@ tnVariableOperator
    ;
 
 tnSymbolOperator
-   : TN_PLUS
-   | TN_MINUS
-   | TN_TIMES
-   | TN_DIV
+   : '++'
+   | '--'
+   | '[]'
+   | '<='
+   | '>='
+   | '=='
+   | '+'
+   | '-'
+   | '*'
+   | '/'
+   | '<'
+   | '>'
    ;
 
 /*
