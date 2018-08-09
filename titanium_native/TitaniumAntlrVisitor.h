@@ -125,7 +125,31 @@ struct TitaniumAntlrVisitor : TitaniumNativeBaseVisitor
 
         TitaniumSymbolType symbol;
 
-        if (text == "+")
+        if (text == "++")
+        {
+            symbol = TitaniumSymbolType::INCREMENT;
+        }
+        else if (text == "--")
+        {
+            symbol = TitaniumSymbolType::DESCREMENT;
+        }
+        else if (text == "[]")
+        {
+            symbol = TitaniumSymbolType::ARRAY_ACCESS;
+        }
+        else if (text == "<=")
+        {
+            symbol = TitaniumSymbolType::LTE;
+        }
+        else if (text == ">=")
+        {
+            symbol = TitaniumSymbolType::GTE;
+        }
+        else if (text == "==")
+        {
+            symbol = TitaniumSymbolType::DOUBLE_EQUAL;
+        }
+        else if (text == "+")
         {
             symbol = TitaniumSymbolType::PLUS;
         }
@@ -140,6 +164,14 @@ struct TitaniumAntlrVisitor : TitaniumNativeBaseVisitor
         else if (text == "/")
         {
             symbol = TitaniumSymbolType::DIV;
+        }
+        else if (text == "<")
+        {
+            symbol = TitaniumSymbolType::LT;
+        }
+        else if (text == ">")
+        {
+            symbol = TitaniumSymbolType::GT;
         }
         else
         {

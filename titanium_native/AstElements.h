@@ -124,10 +124,18 @@ private:
 enum class TitaniumSymbolType
 {
     INVALID,
+    INCREMENT,
+    DESCREMENT,
+    ARRAY_ACCESS,
+    LTE,
+    GTE,
+    DOUBLE_EQUAL,
     PLUS,
     MINUS,
     TIMES,
-    DIV
+    DIV,
+    LT,
+    GT,
 };
 
 struct TitaniumSymbolOperator : TitaniumOperator
@@ -142,28 +150,7 @@ struct TitaniumSymbolOperator : TitaniumOperator
 
     virtual void Print() override
     {
-        std::string result;
-
-        switch (m_symbol)
-        {
-            case TitaniumSymbolType::PLUS:
-                result = "+";
-                break;
-            case TitaniumSymbolType::MINUS:
-                result = "-";
-                break;
-            case TitaniumSymbolType::TIMES:
-                result = "*";
-                break;
-            case TitaniumSymbolType::DIV:
-                result = "/";
-                break;
-            default:
-                result = "INVALID_SYMBOL";
-                break;
-        }
-
-        std::cout << result << std::endl;
+        std::cout << "symbol#" << static_cast<int>(m_symbol) << std::endl;
     }
 
 private:
