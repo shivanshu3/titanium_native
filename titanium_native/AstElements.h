@@ -5,12 +5,24 @@ struct TitaniumAstNode
     virtual void Print() = 0;
 };
 
+enum class TitaniumTermType
+{
+    LITERAL,
+    OPERATOR,
+    PROCEDURE
+};
+
 struct TitaniumTerm : TitaniumAstNode
 {
+    virtual TitaniumTermType GetTermType() = 0;
 };
 
 struct TitaniumLiteral : TitaniumTerm
 {
+    virtual TitaniumTermType GetTermType() override
+    {
+        return TitaniumTermType::LITERAL;
+    }
 };
 
 struct TitaniumNumberLiteral : TitaniumLiteral
@@ -72,6 +84,10 @@ private:
 
 struct TitaniumOperator : TitaniumTerm
 {
+    virtual TitaniumTermType GetTermType() override
+    {
+        return TitaniumTermType::OPERATOR;
+    }
 };
 
 struct TitaniumWordOperator : TitaniumOperator
@@ -200,6 +216,11 @@ struct TitaniumProcedure : TitaniumTerm
         std::wcout << "Procedure start" << std::endl;
         m_expression->Print();
         std::wcout << "Procedure end" << std::endl;
+    }
+
+    virtual TitaniumTermType GetTermType() override
+    {
+        return TitaniumTermType::PROCEDURE;
     }
 
 private:
