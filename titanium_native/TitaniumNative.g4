@@ -14,8 +14,12 @@ tnExpression
    ;
 
 tnTerm
-   : tnLiteral
+   : tnOperand
    | tnOperator
+   ;
+
+tnOperand
+   : tnLiteral
    | tnProcedure
    ;
 

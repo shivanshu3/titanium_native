@@ -15,21 +15,17 @@ enum class TitaniumTermType
 struct TitaniumTerm : TitaniumAstNode
 {
     virtual TitaniumTermType GetTermType() = 0;
-
-    // Terms can either be operands or operators.
-    virtual bool IsOperand() = 0;
 };
 
-struct TitaniumLiteral : TitaniumTerm
+struct TitaniumOperand : TitaniumTerm
+{
+};
+
+struct TitaniumLiteral : TitaniumOperand
 {
     virtual TitaniumTermType GetTermType() override
     {
         return TitaniumTermType::LITERAL;
-    }
-
-    virtual bool IsOperand() override
-    {
-        return true;
     }
 };
 
@@ -95,11 +91,6 @@ struct TitaniumOperator : TitaniumTerm
     virtual TitaniumTermType GetTermType() override
     {
         return TitaniumTermType::OPERATOR;
-    }
-
-    virtual bool IsOperand() override
-    {
-        return false;
     }
 };
 
@@ -213,7 +204,7 @@ private:
     std::vector<std::unique_ptr<TitaniumTerm>> m_terms;
 };
 
-struct TitaniumProcedure : TitaniumTerm
+struct TitaniumProcedure : TitaniumOperand
 {
     TitaniumProcedure(std::unique_ptr<TitaniumExpression> expression) : m_expression { std::move(expression) }
     {
@@ -234,11 +225,6 @@ struct TitaniumProcedure : TitaniumTerm
     virtual TitaniumTermType GetTermType() override
     {
         return TitaniumTermType::PROCEDURE;
-    }
-
-    virtual bool IsOperand() override
-    {
-        return true;
     }
 
 private:

@@ -34,20 +34,15 @@ struct TitaniumAntlrVisitor : TitaniumNativeBaseVisitor
     {
         TitaniumTerm* resultTerm = nullptr;
 
-        if (ctx->tnLiteral())
+        if (ctx->tnOperand())
         {
-            TitaniumLiteral* resultLiteral = visit(ctx->tnLiteral());
-            resultTerm = resultLiteral;
+            TitaniumOperand* resultOperand = visit(ctx->tnOperand());
+            resultTerm = resultOperand;
         }
         else if (ctx->tnOperator())
         {
             TitaniumOperator* resultOperator = visit(ctx->tnOperator());
             resultTerm = resultOperator;
-        }
-        else if (ctx->tnProcedure())
-        {
-            TitaniumProcedure* resultProcedure = visit(ctx->tnProcedure());
-            resultTerm = resultProcedure;
         }
         else
         {
@@ -55,6 +50,29 @@ struct TitaniumAntlrVisitor : TitaniumNativeBaseVisitor
         }
 
         return resultTerm;
+    }
+
+    // Returns TitaniumOperand*
+    virtual antlrcpp::Any visitTnOperand(TitaniumNativeParser::TnOperandContext *ctx) override
+    {
+        TitaniumOperand* resultOperand = nullptr;
+
+        if (ctx->tnLiteral())
+        {
+            TitaniumLiteral* resultLiteral = visit(ctx->tnLiteral());
+            resultOperand = resultLiteral;
+        }
+        else if (ctx->tnProcedure())
+        {
+            TitaniumProcedure* resultProcedure = visit(ctx->tnProcedure());
+            resultOperand = resultProcedure;
+        }
+        else
+        {
+            TnAssert(false);
+        }
+
+        return resultOperand;
     }
 
     // Returns TitaniumProcedure*
