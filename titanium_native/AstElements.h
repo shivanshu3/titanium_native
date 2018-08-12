@@ -29,50 +29,13 @@ struct TitaniumLiteral : TitaniumOperand
     }
 };
 
-struct TitaniumNumberLiteral : TitaniumLiteral
+template<typename T>
+struct TitaniumGenericLiteral : TitaniumLiteral
 {
-    TitaniumNumberLiteral(double _number) : m_number{ _number }
+    TitaniumGenericLiteral(T value) : m_value { std::move(value) }
     {}
 
-    double GetNumber() const
-    {
-        return m_number;
-    }
-
-    virtual void Print() override
-    {
-        std::wcout << m_number << std::endl;
-    }
-
-private:
-    double m_number;
-};
-
-struct TitaniumBoolLiteral : TitaniumLiteral
-{
-    TitaniumBoolLiteral(bool _value) : m_value{ _value }
-    {}
-
-    bool GetValue() const
-    {
-        return m_value;
-    }
-
-    virtual void Print() override
-    {
-        std::wcout << m_value << std::endl;
-    }
-
-private:
-    bool m_value;
-};
-
-struct TitaniumStringLiteral : TitaniumLiteral
-{
-    TitaniumStringLiteral(std::string value) : m_value { std::move(value) }
-    {}
-
-    const std::string& GetValue() const
+    const T& GetValue() const
     {
         return m_value;
     }
@@ -83,8 +46,14 @@ struct TitaniumStringLiteral : TitaniumLiteral
     }
 
 private:
-    std::string m_value;
+    T m_value;
 };
+
+using TitaniumNumberLiteral = TitaniumGenericLiteral<double>;
+
+using TitaniumBoolLiteral = TitaniumGenericLiteral<bool>;
+
+using TitaniumStringLiteral = TitaniumGenericLiteral<std::string>;
 
 struct TitaniumOperator : TitaniumTerm
 {
