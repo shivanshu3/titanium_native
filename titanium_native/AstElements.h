@@ -132,23 +132,15 @@ enum class TitaniumSymbolType
     GT,
 };
 
-struct TitaniumSymbolOperator : TitaniumOperator
+struct TitaniumSymbolOperator : ValueStore<TitaniumSymbolType>, TitaniumOperator
 {
-    TitaniumSymbolOperator(TitaniumSymbolType symbol) : m_symbol{ symbol }
+    TitaniumSymbolOperator(TitaniumSymbolType symbol) : ValueStore<TitaniumSymbolType> { symbol }
     {}
-
-    TitaniumSymbolType GetSymbol() const
-    {
-        return m_symbol;
-    }
 
     virtual void Print() override
     {
-        std::cout << "symbol#" << static_cast<int>(m_symbol) << std::endl;
+        std::cout << "symbol#" << static_cast<int>(m_value) << std::endl;
     }
-
-private:
-    TitaniumSymbolType m_symbol;
 };
 
 // This is the top level AST node, which represents the entire Titanium program
