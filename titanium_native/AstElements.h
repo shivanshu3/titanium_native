@@ -46,15 +46,15 @@ struct ValueStore
         std::cout << m_value << std::endl;
     }
 
-private:
+protected:
     T m_value;
 };
 
 template<typename T>
 struct TitaniumGenericLiteral : ValueStore<T>, TitaniumLiteral
 {
-    template<typename... Params>
-    TitaniumGenericLiteral(Params&&... params) : ValueStore<T> { std::forward<Params>(params)... } {}
+    TitaniumGenericLiteral(T t) : ValueStore<T> { std::move(t) }
+    {}
 
     virtual void Print() override
     {
@@ -76,23 +76,15 @@ struct TitaniumOperator : TitaniumTerm
     }
 };
 
-struct TitaniumWordOperator : TitaniumOperator
+struct TitaniumWordOperator : ValueStore<std::string>, TitaniumOperator
 {
-    TitaniumWordOperator(std::string identifier) : m_identifier{ std::move(identifier) }
+    TitaniumWordOperator(std::string identifier) : ValueStore<std::string> { std::move(identifier) }
     {}
-
-    const std::string& GetName() const
-    {
-        return m_identifier;
-    }
 
     virtual void Print() override
     {
-        std::cout << m_identifier << std::endl;
+        ValueStore<std::string>::GenericPrint();
     }
-
-private:
-    std::string m_identifier;
 };
 
 struct TitaniumVariableOperator : TitaniumOperator
