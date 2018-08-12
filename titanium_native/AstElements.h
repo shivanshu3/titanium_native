@@ -30,23 +30,36 @@ struct TitaniumLiteral : TitaniumOperand
 };
 
 template<typename T>
-struct TitaniumGenericLiteral : TitaniumLiteral
+struct ValueStore
 {
-    TitaniumGenericLiteral(T value) : m_value { std::move(value) }
-    {}
+    ValueStore(T value) : m_value { std::move(value) }
+    {
+    }
 
     const T& GetValue() const
     {
         return m_value;
     }
 
-    virtual void Print() override
+    void GenericPrint()
     {
         std::cout << m_value << std::endl;
     }
 
 private:
     T m_value;
+};
+
+template<typename T>
+struct TitaniumGenericLiteral : ValueStore<T>, TitaniumLiteral
+{
+    template<typename... Params>
+    TitaniumGenericLiteral(Params&&... params) : ValueStore<T> { std::forward<Params>(params)... } {}
+
+    virtual void Print() override
+    {
+        ValueStore<T>::GenericPrint();
+    }
 };
 
 using TitaniumNumberLiteral = TitaniumGenericLiteral<double>;
