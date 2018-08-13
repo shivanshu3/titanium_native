@@ -57,6 +57,9 @@
     <ClInclude Include="TitaniumAntlrErrorListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="parse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -82,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="$(IntermediateOutputPath)\antlr_parser\TitaniumNativeVisitor.cpp">
       <Filter>Source Files\AntlrGeneratedParserSources</Filter>
+    </ClCompile>
+    <ClCompile Include="parse.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
