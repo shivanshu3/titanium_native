@@ -6,7 +6,7 @@
 // Project includes
 #include "../util.h"
 #include "AstElements.h"
-#include "parse.h"
+#include "parser.h"
 
 int main(int argc, const char * argv[])
 {

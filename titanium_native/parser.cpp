@@ -10,7 +10,7 @@
 #include "AstElements.h"
 #include "TitaniumAntlrVisitor.h"
 #include "TitaniumAntlrErrorListener.h"
-#include "parse.h"
+#include "parser.h"
 
 using namespace antlr4;
 
